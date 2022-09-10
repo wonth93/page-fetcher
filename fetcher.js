@@ -10,7 +10,7 @@ const request = require('request');
 
 const downloadpage = function(url, downloadPath, callback) {
   request(url, (error, response, body) => {
-    if (error !== null && response.statusCode !== 200) {
+    if (response.statusCode !== 200) {
       return console.log(`Error Code: ${response.statusCode} FYI...`);
     } else {
       return callback(url, downloadPath);
