@@ -1,7 +1,7 @@
 // collect data from command line
-const arguments = process.argv.slice(2);
-const domain = arguments[0];
-const path = arguments[1];
+const argumentsFromCommandLine = process.argv.slice(2);
+const domain = argumentsFromCommandLine[0];
+const path = argumentsFromCommandLine[1];
 
 // require file system and request library
 const fs = require('fs');
@@ -15,6 +15,6 @@ request(`${domain}`, (error, response, body) => {
     if (err) {
       console.error(err);
     }
-    console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${path}`)
-  })
+    console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${path}`);
+  });
 });
