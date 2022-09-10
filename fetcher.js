@@ -7,14 +7,23 @@ const path = argumentsFromCommandLine[1];
 const fs = require('fs');
 const request = require('request');
 
-request(`${domain}`, (error, response, body) => {
-  if (error) {
-    console.log(error);
-  }
-  fs.writeFile(`${path}`, body, err => {
-    if (err) {
-      console.error(err);
+
+const downloadpage = function(url, downloadPath, callback) {
+  request(url, (error, response, body) => {
+    if (error !== null && response.statusCode !== 200) {
+      return console.log(`Error Code: ${response.statusCode} FYI...`);
+    } else {
+      return callback(url, downloadPath);
     }
-    console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${path}`);
   });
-});
+};
+
+const message = function(link, way) {
+  request(link, (error, response, body) => {
+    fs.writeFile(way, body, err => {
+      console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${way}`);
+    });
+  });
+};
+
+downloadpage(domain, path, message);
